@@ -1,0 +1,13 @@
+<nav>
+    <a href="{{ path('main_home') }}">Home</a>
+    -
+    {% if app.user %}
+        <a href="{{ path('main_monCompte', {"id": app.user.id}) }}">Mon Compte</a>
+        -
+        <a href="{{ path('app_logout') }}">Deconnexion ({{ app.user.userIdentifier }})</a>
+    {% else %}
+        <a href="{{ path('app_register') }}">Créer un compte</a>
+        -
+        <a href="{{ path('app_login') }}">Se connecter</a>
+    {% endif %}
+</nav>

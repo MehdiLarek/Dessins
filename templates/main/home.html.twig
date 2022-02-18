@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Home - {{ parent() }}
+{% endblock %}
+
+{% block main %}
+    <h3 style="text-decoration: underline">A quoi ca sert? </h3>
+    <p>Ce site permet de s'entrainer à la prise de croquis rapide.
+        Vous pouvez choisir sur quel domaine en particulier vous voulez progresser,
+        et combien de temps vous voulez passer sur chaque croquis.
+    </p>
+    <p>Le but n'est pas d'avoir un dessin propre et finis! Simplement à comprendre quelles lignes sont importantes pour representer l'essence du modèle!</p>
+    <br>
+    <h3 style="text-decoration: underline; color: red">Disclaimer</h3>
+    <p>Il n'y a que <i style="color: red">130 références disponibles</i>, 10 de chaques categories, mais la plupart ne sont pas en HD, et soumis à des droits d'auteur.</p>
+    <br>
+    <br>
+    <p style="color: cornflowerblue">Il est nécessaire de se créer un compte pour commencer</p>
+    <a id="lienGo" href="{{ path('main_choix') }}"> >>>  Go! <<< </a>
+{% endblock %}

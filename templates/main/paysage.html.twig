@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block main %}
+    <h2>Affinage de la selection</h2>
+    <p>Plutôt nature ou ville?</p>
+    <form action="{{ path('main_paysage') }}" method="post">
+
+        <label for=""></label>
+        <select name="paysage" id="paysage">
+            <option value="1">Campagnes</option>
+            <option value="2">Villes</option>
+        </select>
+        <input type="submit" value="next">
+    </form>
+{% endblock %}
+

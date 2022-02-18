@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+
+
+
+
+{% block main %}
+    <h2>Affinage de la selection</h2>
+    <p>Quel genre d'animaux?</p>
+    <form action="{{ path('main_animaux') }}" method="post">
+
+        <label for=""></label>
+        <select name="animaux" id="animaux">
+            <option value="1">Loups</option>
+            <option value="2">Canidés</option>
+            <option value="3">Autre</option>
+        </select>
+        <input type="submit" value="next">
+    </form>
+{% endblock %}
+

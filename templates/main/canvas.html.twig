@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Let's Go | {{ parent() }}
+{% endblock %}
+
+{% block main %}
+
+    <div class="recap">
+        <p>Categorie: {{ categorie }} | Selection: {{ selection }}</p>
+        <p>Durée d'affichage:</p>
+        <div id="timer"></div>
+        <br>
+        <button id="btnPause" onclick="pause()"><img style="max-height: 30px; background-color: aquamarine; border-radius: 40px" src="{{ asset('img/pause-icon-9.png') }}" alt="bouton pause"></button>
+        <button id="btnNext" onclick="location.reload()"><img style="max-height: 30px; background-color: aquamarine; border-radius: 40px" src="{{ asset('img/skip_forward-512_119080.png') }}" alt="bouton next"></button>
+        <button id="btnReprendre" onclick="reprise()"><img style="max-height: 30px; background-color: aquamarine; border-radius: 40px" src="{{ asset('img/img_404212.png') }}" alt="bouton play"></button>
+
+
+
+        <!-- Mise en place du changement de ref à la fin du temps impartie-->
+       {# <script src="{{ asset('Script/Lecteur.js') }}"></script>#}
+        <script>
+            let ok = false;
+            let temps = {{ duree }}
+            const timer = document.getElementById("timer")
+            timer.innerText = temps
+
+
+            function diminuer(){
+                let minutes = parseInt(temps / 60, 10)
+                let secondes = parseInt(temps % 60, 10)
+
+                minutes = minutes < 10 ? "0" + minutes : minutes
+                secondes = secondes < 10 ? "0" + secondes : secondes
+
+                timer.innerText = `${minutes}:${secondes}`
+                temps = temps <= 0 ? 0 : temps - 1
+                if(temps === 0){
+                    window.parent.location.reload();
+                }
+            }
+
+            function pause(){
+                ok = true;
+                let tempsPause = temps;
+               clearInterval(t);
+               t=0;
+               let btnP = document.getElementById("btnPause");
+               btnP.setAttribute("style", "visibility: hidden");
+
+                let btnR = document.getElementById("btnReprendre");
+                btnR.setAttribute("style", "visibility: visible");
+            }
+
+            function reprise(){
+                if (ok){
+                let tempsReprise = temps;
+                t = setInterval(diminuer, 1000);
+                let btnR = document.getElementById("btnReprendre");
+                btnR.setAttribute("style", "visibility: hidden");
+
+                let btnP = document.getElementById("btnPause");
+                btnP.setAttribute("style", "visibility: visible");
+                }
+            }
+
+
+            let t = setInterval(diminuer, 1000)
+        </script>
+    </div>
+
+    <div class="canvas">
+        <img src="{{ asset(url) }}" alt="La ref' à dessiner">
+    </div>
+
+
+{% endblock %}
+

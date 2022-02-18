@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <h2>Une dernière precision</h2>
+    <p>Une zone en particulier?</p>
+    <form action="{{ path('main_detail') }}" method="post">
+
+        <label for=""></label>
+        <select name="detail" id="detail">
+            <option value="1">Corps</option>
+            <option value="2">Visage</option>
+            <option value="3">Mains</option>
+            <option value="4">Pieds</option>
+        </select>
+        <input type="hidden" name="selection" value="{{ selection }}">
+        <input type="hidden" name="categorie" value="{{ categorie }}">
+        <input type="submit" value="next">
+    </form>
+{% endblock %}
+
+
+

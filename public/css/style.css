@@ -1,0 +1,62 @@
+header{
+    text-align: center;
+    border: solid black 4px;
+    padding-bottom: 10px;
+    background-color: aquamarine;
+}
+footer{
+    text-align: center;
+    border: solid black 4px;
+    background-color: aquamarine;
+}
+main{
+    text-align: center;
+    color: aquamarine;
+    min-height: 600px;
+    border: solid black 4px;
+}
+a{
+    color: black;
+    text-decoration: none;
+}
+html{
+    background-color: black;
+}
+a:hover{
+    color: red;
+}
+main button{
+    border-radius: 10px;
+    max-height: 25px;
+    max-width: 150px;
+    background-color: black;
+    border: none;
+    color: aquamarine;
+
+}
+.canvas{
+    min-height: 450px;
+
+
+}
+.recap{
+    text-align: center;
+}
+
+.canvas img{
+    max-width: 100%;
+    min-height: 100%;
+}
+
+button:hover{
+    color: red;
+}
+
+#lienGo{
+    color: aquamarine;
+}
+
+#lienGo:hover{
+    color: red;
+}
+

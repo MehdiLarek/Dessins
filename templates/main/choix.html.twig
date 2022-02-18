@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Choix des references | {{ parent() }}
+{% endblock %}
+
+
+
+
+{% block main %}
+    <h2>Affinage de la selection</h2>
+    <p>Merci de renseigner une catégorie</p>
+    <form action="{{ path('main_selection') }}" method="post">
+
+        <label for="categorie"></label>
+        <select name="categorie" id="categorie">
+            <option value="1">Animaux</option>
+            <option value="2">Personnes</option>
+            <option value="3">Paysages</option>
+        </select>
+     <input type="submit" value="next">
+    </form>
+{% endblock %}
+

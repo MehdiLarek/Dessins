@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block main %}
+    <h2>Affinage de la selection</h2>
+    <p>Un genre en particulier?</p>
+    <form action="{{ path('main_personne') }}" method="post">
+
+        <label for=""></label>
+        <select name="personne" id="personne">
+            <option value="1">Homme</option>
+            <option value="2">Femme</option>
+        </select>
+        <input type="submit" value="next">
+    </form>
+{% endblock %}
+

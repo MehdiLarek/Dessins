@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block main %}
+    <h2>Vous avez choisi la categorie <i style="color: darkgreen">{{ categorie }}</i>, et plus particulierement les <i style="color: darkgreen">{{ selection }}</i></h2>
+    {% if ok is same as true %}
+        <p>Point de detail: {{ detail}} </p>
+    {% endif %}
+    <p>Plus qu'à choisir le temps d'affichage:</p>
+    <form action="{{ path('main_duree') }}" method="post">
+        <label for="duree"></label>
+        <select name="duree" id="duree">
+            <option value="30">30 secondes</option>
+            <option value="60">1 minute</option>
+            <option value="120">2 minutes</option>
+            <option value="300">5 minutes</option>
+            <option value="600">10 minutes</option>
+            <option value="900">15 minutes</option>
+            <option value="1800">30 minutes</option>
+            <option value="3600">1 heure</option>
+        </select>
+        <input type="hidden" value="{{ categorie }}" name="categorie">
+        <input type="hidden" value="{{ selection }}" name="selection">
+        <input type="hidden" value="{{ detail }}" name="detail">
+        <input type="hidden" value="{{ ok }}" name="ok">
+        <input type="submit" value="Allez">
+    </form>
+{% endblock %}
+

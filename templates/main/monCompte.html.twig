@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Mon Compte | {{ parent() }}
+{% endblock %}
+
+{% block main %}
+
+    <h2>Bienvenue {{ app.user.userIdentifier }} !</h2>
+    <br>
+    <br>
+    <p style="text-decoration: underline">Quelques statistiques:</p>
+    <p>Membre depuis le <b style="color: deepskyblue">{{ app.user.dateCreation | date("d-m-Y") }}</b></p>
+    <p>Nombre de ref' travaillées: <b style="color: deepskyblue">{{ app.user.nbDessins }}</b></p>
+{% endblock %}
+
