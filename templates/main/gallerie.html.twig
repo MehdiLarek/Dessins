@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <h3>Gallerie</h3>
+    <p>Les croquis de l'admin:</p>
+    <br>
+    <article class="containerGallerie">
+        <a href="{{ path('main_zoomAdmin', {'id':1}) }}"><img class="imageGallerie"  src="{{ asset('uploads/admin/monsitededessin1.png') }}" alt="un croquis de l'admin!"></a>
+        <a href="{{ path('main_zoomAdmin', {'id':2}) }}"><img class="imageGallerie"  src="{{ asset('uploads/admin/monsitededessin2.png') }}" alt="un croquis de l'admin!"></a>
+        <a href="{{ path('main_zoomAdmin', {'id':3}) }}"><img class="imageGallerie"  src="{{ asset('uploads/admin/monsitededessin3.png') }}" alt="un croquis de l'admin!"></a>
+
+    </article>
+    <hr>
+    <p>Les croquis des utilisateurs:</p>
+    {% if dessins %}
+        <article class="containerGallerie">
+    {% for dessin in dessins %}
+
+
+        <div class="gallerie">
+            <a id="lienGallerie" href="{{ path('main_signaler', {'id': dessin.id}) }}">SIGNALER</a>
+            <a href="{{ asset('uploads/croquis/' ~ dessin.filename) }}"><img class="imageGallerie"  src="{{ asset('uploads/croquis/' ~ dessin.filename) }}" alt="un dessin utilisateur"></a>
+        </div>
+
+    {% endfor %}
+        </article>
+    {% else %}
+<h3>Personne n'a encore publié quoi que ce soit :(</h3>
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+    Gallerie | {{ parent() }}
+{% endblock %}
+

@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+<div>
+
+    <a style="color: red" href="{{ path('main_gallerie') }}">Retour</a>
+    <h4>Un dessin de {{ artiste.userIdentifier }}</h4>
+    <img src="{{ asset('uploads/croquis/' ~ dessin.filename) }}" alt="Un dessin de {{ artiste.userIdentifier }}">
+
+</div>
+
+{% endblock %}
+
+{% block title %}
+    {{ parent() }}
+{% endblock %}
+

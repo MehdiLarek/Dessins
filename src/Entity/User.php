@@ -53,6 +53,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $tempsCo;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $publication;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -169,6 +174,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setTempsCo(?int $tempsCo): self
     {
         $this->tempsCo = $tempsCo;
+
+        return $this;
+    }
+
+    public function getPublication(): ?int
+    {
+        return $this->publication;
+    }
+
+    public function setPublication(?int $publication): self
+    {
+        $this->publication = $publication;
 
         return $this;
     }

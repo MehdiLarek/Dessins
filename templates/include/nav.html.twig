@@ -1,8 +1,12 @@
 <nav>
     <a href="{{ path('main_home') }}">Home</a>
     -
+    <a href="{{ path('main_gallerie') }}">Gallerie</a>
+    -
     {% if app.user %}
         <a href="{{ path('main_monCompte', {"id": app.user.id}) }}">Mon Compte</a>
+        -
+        <a href="{{ path('main_publier') }}">Publier mes croquis</a>
         -
         <a href="{{ path('app_logout') }}">Deconnexion ({{ app.user.userIdentifier }})</a>
     {% else %}

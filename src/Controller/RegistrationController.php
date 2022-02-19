@@ -25,6 +25,7 @@ class RegistrationController extends AbstractController
         $user->setNbDessins(0);
         $user->setTempsCo(0);
         $user->setDateCreation(new \DateTime());
+        $user->setPublication(0);
 
 
         $form = $this->createForm(RegistrationFormType::class, $user);

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    {{ form_start(croquisForm) }}
+    {{ form_widget(croquisForm) }}
+        <button>Publier</button>
+    {{ form_end(croquisForm) }}
+{% endblock %}
+
+{% block title %}
+    Publier un croquis | {{ parent() }}
+{% endblock %}
+

@@ -3,13 +3,19 @@
 namespace App\Controller;
 
 
+use App\Entity\Croquis;
+use App\Form\CroquisFormType;
+use App\Repository\CroquisRepository;
+use App\Repository\UserRepository;
 use App\Services\Compteur;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 
 /**
@@ -160,11 +166,19 @@ class MainController extends AbstractController
 
         $categorie = $_POST["categorie"];
         $selection = $_POST["selection"];
+
         $duree = $_POST["duree"];
         $detail = $_POST["detail"];
         $ok = $_POST['ok'];
 
-        $max = 10;
+        if($selection === 'Campagnes'){
+            $max = 12;
+        }else{
+            $max = 10;
+        }
+
+
+
 
         $numero = random_int(1, $max);
 
@@ -222,6 +236,112 @@ class MainController extends AbstractController
         ]);
     }
 
+    //Affichage de la gallerie*************************************************************************************
+    /**
+     * @Route("gallerie", name="gallerie")
+     */
+    public function gallerie(CroquisRepository $croquisRepository){
+        $dessins = $croquisRepository->findBy(['visible' => 1]);
+
+        return $this->render("main/gallerie.html.twig",[
+            'dessins' => $dessins
+        ]);
+    }
+
+    //Affichage et traitement du formulaire d'upload    ******************************************************************************************
+    /**
+     * @IsGranted("ROLE_USER")
+     * @Route("publier", name="publier")
+     */
+    public function publier(Request $request, SluggerInterface $slugger, EntityManagerInterface $entityManager){
+        $publicationAvant = $this->getUser()->getPublication();
+        $this->getUser()->setPublication($publicationAvant+1);
+
+        $croquis = new Croquis();
+        $croquis->setIdUser($this->getUser()->getId());
+        $croquis->setVisible(true);
+
+        $croquisForm = $this->createForm(CroquisFormType::class, $croquis);
+        $croquisForm->handleRequest($request);
+
+        if($croquisForm->isSubmitted() && $croquisForm->isValid()){
+            $croquisFile = $croquisForm->get('filename')->getData();
+
+            if($croquisFile){
+                $nomOriginal = pathinfo($croquisFile->getClientOriginalName(), PATHINFO_FILENAME );
+                $nomSafe = $slugger->slug($nomOriginal);
+                $nomNouveau = $nomSafe.'-'.uniqid().'.'.$croquisFile->guessExtension();
+
+                try{
+                    $croquisFile->move(
+                        $this->getParameter('croquis_dossier'),
+                        $nomNouveau
+                    );
+                }catch (FileException $exception){
+                    throw $this->createNotFoundException('Une erreur est survenue');
+                }
+
+                $croquis->setFilename($nomNouveau);
+                $entityManager->persist($croquis);
+                $entityManager->flush();
+
+                return $this->redirectToRoute("main_gallerie");
+            }
+        }
+
+        return $this->render("main/publier.html.twig",[
+            "croquisForm" => $croquisForm->createView()
+        ]);
+    }
+
+    /**
+     * @IsGranted("ROLE_USER")
+     * @Route("signaler/{id}", name="signaler")
+     */
+    public function signaler(CroquisRepository $repository, $id, EntityManagerInterface $entityManager){
+        $croquis = $repository->find($id);
+
+        $croquis->setVisible(false);
+        $entityManager->persist($croquis);
+        $entityManager->flush();
+
+        $dessins = $repository->findBy(['visible' => 1]);
+
+        return $this->render("main/gallerie.html.twig",[
+            'dessins' => $dessins]);
+
+
+    }
+
+    /**
+     * @Route("zoom/{id}", name="zoom")
+     */
+    public function zoom($id, CroquisRepository $repository, UserRepository $userRepository){
+        $dessin = $repository->find($id);
+        $artiste = $userRepository->find($dessin->getIdUser());
+        return $this->render("main/zoom.html.twig", [
+            'dessin' => $dessin,
+            'artiste' => $artiste
+        ]);
+    }
+
+    /**
+     * @Route("zoomAdmin/{id}", name="zoomAdmin")
+     */
+    public function zoomAdmin($id){
+       $url = "monsitededessin".$id.".png";
+        return $this->render("main/zoomAdmin.html.twig", [
+            'url' =>$url
+        ]);
+    }
+
+    /**
+     * @Route("version", name="version")
+     */
+    public function version(){
+        return $this->render("main/version.html.twig");
+    }
+
     // Methode AJAX **********************************************************************
     //non implementé
 
@@ -234,7 +354,11 @@ class MainController extends AbstractController
         if($request->isXmlHttpRequest()){
             $compteur->leTempsQuiPasse($this->getUser());
         }
+
     }
+
+
+
 
 
 }

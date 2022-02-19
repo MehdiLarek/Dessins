@@ -59,4 +59,21 @@ button:hover{
 #lienGo:hover{
     color: red;
 }
+#lienGallerie{
+    color: aquamarine;
+}
+#lienGallerie:hover{
+    color: red;
+}
+
+.containerGallerie{
+    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 350px);
+    grid-gap: 35px;
+
+}
+.imageGallerie{
+    max-width: 250px;
+}
 
