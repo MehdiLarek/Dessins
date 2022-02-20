@@ -173,7 +173,7 @@ class MainController extends AbstractController
         $ok = $_POST['ok'];
 
         if($selection === 'Campagnes'){
-            $max = 12;
+            $max = 11;
         }else{
             $max = 10;
         }
