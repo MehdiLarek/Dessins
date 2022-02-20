@@ -175,7 +175,7 @@ class MainController extends AbstractController
         if($selection === 'Campagnes'){
             $max = 11;
         }else{
-            $max = 10;
+            $max = 12;
         }
 
 
